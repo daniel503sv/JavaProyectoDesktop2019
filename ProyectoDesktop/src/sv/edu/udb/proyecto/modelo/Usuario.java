@@ -12,6 +12,8 @@ import java.util.Date;
  * @author josed
  */
 public class Usuario implements BaseModel{
+
+    public static String[] HEADERS = {"ID","Nombres","Apellidos","Correo","Teléfono","Departamento","Rol","Fecha de creación"};
     int id;
     String nombre;
     String apellido;
@@ -23,6 +25,7 @@ public class Usuario implements BaseModel{
     Date fechaCreacion;
 
     public Usuario() {
+        this.fechaCreacion = new Date();
     }
 
     public Usuario(String nombre, String apellido, String correo, String telefono, int departamentoId, int rolId) {
@@ -126,7 +129,8 @@ public class Usuario implements BaseModel{
 
     @Override
     public Object[] getData() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Object[] data = {id,nombre,apellido,correo,telefono,departamentoId,rolId,fechaCreacion};
+        return data;
     }
 
 }

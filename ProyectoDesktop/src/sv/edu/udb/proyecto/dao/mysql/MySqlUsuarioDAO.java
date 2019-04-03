@@ -25,7 +25,8 @@ import sv.edu.udb.proyecto.modelo.Usuario;
 public class MySqlUsuarioDAO implements UsuarioDAO {
     
     final String INSERT = "INSERT INTO usuario(nombre,apellido,correo,telefono,password,departamento_id,rol_id,fecha_creacion) values(?,?,?,?,SHA2(?,256),?,?,?)";
-    final String UPDATE = "UPDATE usuario SET nombre=?,apellido=?,correo=?,telefono=?,password=?,departamento_id=?,rol_id=?,fecha_creacion=? WHERE id=?";
+    final String UPDATE = "UPDATE usuario SET nombre=?,apellido=?,correo=?,telefono=?,password=SHA2(?,256),departamento_id=?,rol_id=?,fecha_creacion=? WHERE id=?";
+    final String UPDATE_SIN_PASS = "UPDATE usuario SET nombre=?,apellido=?,correo=?,telefono=?,departamento_id=?,rol_id=?,fecha_creacion=? WHERE id=?";
     final String DELETE = "DELETE FROM usuario WHERE id=?";
     final String GETALL = "SELECT id,nombre,apellido,correo,telefono,password,departamento_id,rol_id,fecha_creacion FROM usuario";
     final String GETONE = "SELECT id,nombre,apellido,correo,telefono,password,departamento_id,rol_id,fecha_creacion FROM usuario WHERE id=?";
@@ -72,13 +73,15 @@ public class MySqlUsuarioDAO implements UsuarioDAO {
     public void modificar(Usuario modelo) throws DAOException {
         PreparedStatement st = null;
         try {
-            st = conn.prepareStatement(UPDATE);
+            st = conn.prepareStatement((modelo.getPassword()!=null)?UPDATE:UPDATE_SIN_PASS);
             int col=1;
             st.setString(col++, modelo.getNombre());
             st.setString(col++, modelo.getApellido());
             st.setString(col++, modelo.getCorreo());
             st.setString(col++, modelo.getTelefono());
-            st.setString(col++, modelo.getPassword());
+            if((modelo.getPassword()!=null)){
+                st.setString(col++, modelo.getPassword());
+            }
             st.setInt(col++, modelo.getDepartamentoId());
             st.setInt(col++, modelo.getRolId());
             st.setDate(col++, new Date(modelo.getFechaCreacion().getTime()));

@@ -17,9 +17,9 @@ public class FrmMaster extends javax.swing.JFrame {
      * Creates new form FrmMaster
      */
     public FrmMaster() {
-        if(Sesion.getUsuario()!=null){
-                initComponents();
-        }else{
+        if (Sesion.getUsuario() != null) {
+            initComponents();
+        } else {
             this.dispose();
         }
     }
@@ -51,6 +51,11 @@ public class FrmMaster extends javax.swing.JFrame {
 
         openMenuItem.setMnemonic('o');
         openMenuItem.setText("Usuarios");
+        openMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                openMenuItemActionPerformed(evt);
+            }
+        });
         fileMenu.add(openMenuItem);
 
         saveMenuItem.setMnemonic('s');
@@ -111,13 +116,21 @@ public class FrmMaster extends javax.swing.JFrame {
     }//GEN-LAST:event_exitMenuItemActionPerformed
 
     private void saveMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveMenuItemActionPerformed
-        if(!IfrmDepartamento.activo){
+        if (!IfrmDepartamento.activo) {
             IfrmDepartamento frmDepa = new IfrmDepartamento();
             this.desktopPane.add(frmDepa);
             frmDepa.show();
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_saveMenuItemActionPerformed
+
+    private void openMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openMenuItemActionPerformed
+        if (!IfrmUsuario.activo) {
+            IfrmUsuario frmUsr = new IfrmUsuario();
+            this.desktopPane.add(frmUsr);
+            frmUsr.show();
+        }
+    }//GEN-LAST:event_openMenuItemActionPerformed
 
     /**
      * @param args the command line arguments

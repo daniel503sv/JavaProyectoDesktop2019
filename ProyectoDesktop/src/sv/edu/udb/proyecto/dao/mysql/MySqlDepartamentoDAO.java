@@ -116,7 +116,7 @@ public class MySqlDepartamentoDAO implements DepartamentoDAO{
 
     @Override
     public List<Departamento> obtenerTodos() throws DAOException{
- PreparedStatement stat = null;
+        PreparedStatement stat = null;
         ResultSet rs = null;
         List<Departamento> departamentos = new ArrayList<>();
         
@@ -131,14 +131,14 @@ public class MySqlDepartamentoDAO implements DepartamentoDAO{
                 try {
                     rs.close();
                 } catch (SQLException ex) {
-                    Logger.getLogger(MySqlUsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(MySqlDepartamentoDAO.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             if(stat !=null){
                 try {
                     stat.close();
                 } catch (SQLException ex) {
-                    Logger.getLogger(MySqlUsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(MySqlDepartamentoDAO.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             throw new DAOException("Error al ejecutar el SQL",e);
@@ -165,14 +165,14 @@ public class MySqlDepartamentoDAO implements DepartamentoDAO{
                 try {
                     rs.close();
                 } catch (SQLException ex) {
-                    Logger.getLogger(MySqlUsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(MySqlDepartamentoDAO.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             if(stat !=null){
                 try {
                     stat.close();
                 } catch (SQLException ex) {
-                    Logger.getLogger(MySqlUsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(MySqlDepartamentoDAO.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             throw new DAOException("Error al ejecutar el SQL",e);
