@@ -64,6 +64,10 @@ public class FrmLogin extends javax.swing.JFrame {
 
         jLabel2.setText("Contraseña");
 
+        txtUsuario.setText("admin");
+
+        txtPassword.setText("password");
+
         jLabel3.setFont(new java.awt.Font("Verdana", 0, 20)); // NOI18N
         jLabel3.setText("Administrador de proyectos");
         jLabel3.setToolTipText("");

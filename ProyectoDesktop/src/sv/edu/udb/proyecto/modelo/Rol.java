@@ -9,7 +9,7 @@ package sv.edu.udb.proyecto.modelo;
  *
  * @author josed
  */
-public class Rol {
+public class Rol implements BaseModel{
     Integer id;
     String nombre;
     String descripcion;
@@ -57,6 +57,15 @@ public class Rol {
     public String toString() {
         return "Rol{" + "id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + '}';
     }
-    
+
+    @Override
+    public Object[] getData() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public static String[] getHeaders() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     
 }

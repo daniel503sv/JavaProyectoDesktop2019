@@ -9,10 +9,11 @@ package sv.edu.udb.proyecto.modelo;
  *
  * @author josed
  */
-public class Departamento {
-    Integer id;
-    String nombre;
-    String descripcion;
+public class Departamento implements BaseModel{
+    private Integer id;
+    private String nombre;
+    private String descripcion;
+    public static final String[] HEADERS = {"ID","Nombre","Descripción"};
 
     public Departamento() {
     }
@@ -57,6 +58,10 @@ public class Departamento {
     public String toString() {
         return "Departamento{" + "id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + '}';
     }
-    
-    
+
+    @Override
+    public Object[] getData() {
+        Object[] data = {this.id,this.nombre,this.descripcion};
+        return data;
+    }   
 }

@@ -11,7 +11,7 @@ import java.util.Date;
  *
  * @author josed
  */
-public class Usuario {
+public class Usuario implements BaseModel{
     int id;
     String nombre;
     String apellido;
@@ -122,9 +122,11 @@ public class Usuario {
     @Override
     public String toString() {
         return "Usuario{" + "id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", correo=" + correo + ", password=" + password + ", telefono=" + telefono + ", departamentoId=" + departamentoId + ", rolId=" + rolId + ", fechaCreacion=" + fechaCreacion + '}';
+    }    
+
+    @Override
+    public Object[] getData() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-
-    
-    
 }
