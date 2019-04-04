@@ -16,6 +16,7 @@ import sv.edu.udb.proyecto.dao.DAOManager;
 import sv.edu.udb.proyecto.dao.DepartamentoDAO;
 import sv.edu.udb.proyecto.dao.RolDAO;
 import sv.edu.udb.proyecto.dao.UsuarioDAO;
+import sv.edu.udb.proyecto.dao.ProyectoDAO;
 
 /**
  *
@@ -32,6 +33,7 @@ public class MySqlDAOManager implements DAOManager {
     private UsuarioDAO usuarios= null;
     private RolDAO roles = null;
     private DepartamentoDAO departamentos= null;
+    private ProyectoDAO proyectos=null;
     
     
     public MySqlDAOManager() throws SQLException, FileNotFoundException, IOException, ClassNotFoundException {
@@ -81,6 +83,14 @@ public class MySqlDAOManager implements DAOManager {
            departamentos = new  MySqlDepartamentoDAO(conn);
        }
        return departamentos;    
-    }    
+    }
+
+    @Override
+    public ProyectoDAO getProyectoDAO() {
+     if(proyectos==null){
+           proyectos = new  MySqlProyectoDAO(conn);
+       }
+       return proyectos;    
+    } 
     
 }
