@@ -5,14 +5,11 @@
  */
 package sv.edu.udb.proyecto.dao;
 
+import sv.edu.udb.proyecto.modelo.Proyecto;
+
 /**
  *
  * @author josed
  */
-public interface DAOManager {
-
-    UsuarioDAO getUsuarioDAO();
-    RolDAO getRolDAO();
-    DepartamentoDAO getDepartamentoDAO();
-    ProyectoDAO getProyectoDAO();
-}
+public interface ProyectoDAO extends DAO<Proyecto,Integer> {
+ }
