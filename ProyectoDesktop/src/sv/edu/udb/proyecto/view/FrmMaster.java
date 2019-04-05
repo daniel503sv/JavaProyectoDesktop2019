@@ -83,6 +83,11 @@ public class FrmMaster extends javax.swing.JFrame {
 
         cutMenuItem.setMnemonic('t');
         cutMenuItem.setText("Proyectos");
+        cutMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cutMenuItemActionPerformed(evt);
+            }
+        });
         editMenu.add(cutMenuItem);
 
         copyMenuItem.setMnemonic('y');
@@ -131,6 +136,14 @@ public class FrmMaster extends javax.swing.JFrame {
             frmUsr.show();
         }
     }//GEN-LAST:event_openMenuItemActionPerformed
+
+    private void cutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cutMenuItemActionPerformed
+        if (!IfrmProyecto.activo) {
+            IfrmProyecto frmPro = new IfrmProyecto();
+            this.desktopPane.add(frmPro);
+            frmPro.show();
+        }
+    }//GEN-LAST:event_cutMenuItemActionPerformed
 
     /**
      * @param args the command line arguments
