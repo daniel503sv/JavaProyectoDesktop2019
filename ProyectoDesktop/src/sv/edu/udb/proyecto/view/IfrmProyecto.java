@@ -18,7 +18,7 @@ import sv.edu.udb.proyecto.modelo.Proyecto;
  *
  * @author josed
  */
-public class IfrmProyecto1 extends javax.swing.JInternalFrame {
+public class IfrmProyecto extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form IfrmDepartamento
@@ -29,11 +29,11 @@ public class IfrmProyecto1 extends javax.swing.JInternalFrame {
     private int lastRow;
     private Proyecto proyectoActual;
     
-    public IfrmProyecto1() {
+    public IfrmProyecto() {
         activo = true;
         initComponents();
         cargarTabla();
-        cmbEncargado.add(this);
+        //cmbEncargado.add(this);
     }
     
     public void llenarcombos(){
@@ -41,11 +41,11 @@ public class IfrmProyecto1 extends javax.swing.JInternalFrame {
             Sesion.getDatos().getProyectoDAO().obtenerTodos().forEach(proyecto->{
             });
         } catch (SQLException ex) {
-            Logger.getLogger(IfrmProyecto1.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(IfrmProyecto.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(IfrmProyecto1.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(IfrmProyecto.class.getName()).log(Level.SEVERE, null, ex);
         }catch (DAOException ex) {
-                Logger.getLogger(IfrmProyecto1.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(IfrmProyecto.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -239,7 +239,7 @@ public class IfrmProyecto1 extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 99, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -269,7 +269,7 @@ public class IfrmProyecto1 extends javax.swing.JInternalFrame {
             try {
                 proyectoActual = Sesion.getDatos().getProyectoDAO().obtener((int) dtm.getValueAt(fila,0));                
             } catch (SQLException | ClassNotFoundException | DAOException ex) {
-                Logger.getLogger(IfrmProyecto1.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(IfrmProyecto.class.getName()).log(Level.SEVERE, null, ex);
             }
         }      // TODO add your handling code here:
     }//GEN-LAST:event_jtblProyectosMouseClicked
@@ -284,11 +284,11 @@ public class IfrmProyecto1 extends javax.swing.JInternalFrame {
                 dtm.addRow(proyecto.getData());
             });
         } catch (SQLException ex) {
-            Logger.getLogger(IfrmProyecto1.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(IfrmProyecto.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(IfrmProyecto1.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(IfrmProyecto.class.getName()).log(Level.SEVERE, null, ex);
         }catch (DAOException ex) {
-                Logger.getLogger(IfrmProyecto1.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(IfrmProyecto.class.getName()).log(Level.SEVERE, null, ex);
         }
         jtblProyectos.setModel(dtm);
 
@@ -304,7 +304,7 @@ public class IfrmProyecto1 extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(this, "Proyecto borrado exitosamente");
 
             } catch (SQLException | ClassNotFoundException | DAOException ex) {
-                Logger.getLogger(IfrmProyecto1.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(IfrmProyecto.class.getName()).log(Level.SEVERE, null, ex);
                 JOptionPane.showMessageDialog(this, "No se pudo borrar el departamento, asegurese no tener usuarios ni incidentes vinculados al proyecto");
             }
         }
@@ -325,7 +325,7 @@ public class IfrmProyecto1 extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(this, "Proyecto guardado exitosamente");
                 limpiar();
             } catch (SQLException | ClassNotFoundException | DAOException ex) {
-                Logger.getLogger(IfrmProyecto1.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(IfrmProyecto.class.getName()).log(Level.SEVERE, null, ex);
                 JOptionPane.showMessageDialog(this, "No se pudo guardar el proyecto");
             }
            
@@ -337,7 +337,7 @@ public class IfrmProyecto1 extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(this, "Proyecto actualizado exitosamente");
                 limpiar();
             }catch (SQLException | ClassNotFoundException | DAOException ex) {
-                Logger.getLogger(IfrmProyecto1.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(IfrmProyecto.class.getName()).log(Level.SEVERE, null, ex);
                 JOptionPane.showMessageDialog(this, "No se pudo actualizar el proyecto");
             }
         }
