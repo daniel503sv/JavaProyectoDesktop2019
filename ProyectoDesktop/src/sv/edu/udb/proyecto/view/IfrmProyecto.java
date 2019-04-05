@@ -138,7 +138,7 @@ public class IfrmProyecto extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(jtblProyectos);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Departamento"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Proyecto"));
 
         jLabel1.setText("Nombre");
 
@@ -268,6 +268,8 @@ public class IfrmProyecto extends javax.swing.JInternalFrame {
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
+
+        jPanel1.getAccessibleContext().setAccessibleName("Proyecto");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

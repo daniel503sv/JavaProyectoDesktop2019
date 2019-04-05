@@ -8,42 +8,40 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import sv.edu.udb.proyecto.dao.IncidenteDAO;
 import sv.edu.udb.proyecto.dao.exception.DAOException;
-import sv.edu.udb.proyecto.dao.BitacoraDAO;
-import sv.edu.udb.proyecto.modelo.Bitacora;
+import sv.edu.udb.proyecto.modelo.Incidente;
 /**
  *
  * @author Ozkar
  */
-public class MysqlBitacoraDAO implements BitacoraDAO {
+public class MySqlIncidenteDAO implements IncidenteDAO{
     
     Connection conn;
     
-    final String INSERT = "INSERT INTO bitacora(id_incidente,usuario,bitacoracol,razon_rechazo,porcentaje,documento,creado_el,actualizado_el) VALUES (?,?,?,?,?,?,?,?)";
-    final String UPDATE = "UPDATE bitacora SET id_incidente=?,usuario=?,bitacoracol=?,razon_rechazo=?,porcentaje=?,documento=?,creado_el=?,actualizado_el=? WHERE id=?";
-    final String DELETE = "DELETE FROM bitacora WHERE id=?";
-    final String GETALL = "SELECT id,id_incidente,usuario,bitacoracol,razon_rechazo,porcentaje,documento,creado_el,actualizado_el FROM bitacora";
-    final String GETONE = "SELECT id,id_incidente,usuario,bitacoracol,razon_rechazo,porcentaje,documento,creado_el,actualizado_el FROM bitacora WHERE id=?";
+    final String INSERT = "INSERT INTO incidente(nombre,descripcion,desarrollador,probador,fecha_creacion,estado,id_proyecto) VALUES(?,?,?,?,?,?,?)";
+    final String UPDATE = "UPDATE incidente SET nombre=?,descripcion=?,desarrollador=?,probador=?,fecha_creacion=?,estado=?,id_proyecto=? WHERE id=?";
+    final String DELETE = "DELETE FROM incidente WHERE id=?";
+    final String GETALL = "SELECT id,nombre,descripcion,desarrollador,probador,fecha_creacion,estado,id_proyecto FROM incidente";
+    final String GETONE = "SELECT id,nombre,descripcion,desarrollador,probador,fecha_creacion,estado,id_proyecto FROM incidente WHERE id=?";
     
-    public MysqlBitacoraDAO(Connection conn){
+    public MySqlIncidenteDAO(Connection conn){
         this.conn = conn;
     }
-    
+
     @Override
-    public void insertar(Bitacora modelo) throws DAOException {
+    public void insertar(Incidente modelo) throws DAOException {
         PreparedStatement st = null;
         try {
             st = conn.prepareStatement(INSERT);
             int col = 1;
-            st.setString(col++, modelo.getId_incidente());
-            st.setInt(col++, modelo.getUsuario());
-            st.setString(col++, modelo.getBitacoracol());
-            st.setString(col++, modelo.getRazonRechazo());
-            st.setInt(col++, modelo.getPorcentaje());
-            st.setString(col++, modelo.getDocumento());
-            st.setDate(col++, new Date(modelo.getCreado_el().getTime()));
-            st.setDate(col++, new Date(modelo.getActualizado_el().getTime()));
-            st.setInt(col++, modelo.getId());
+            st.setString(col++, modelo.getNombre());
+            st.setString(col++, modelo.getDescripcion());
+            st.setInt(col++, modelo.getDesarrollador());
+            st.setInt(col++, modelo.getProbador());            
+            st.setDate(col++, new Date(modelo.getFechaCreacion().getTime()));
+            st.setInt(col++, modelo.getEstado());
+            st.setInt(col++, modelo.getIdProyecto());
             if(st.executeUpdate()<0){
                 throw new DAOException("Fallo al ejecutar el statement, no se pudo insertar  "+modelo.toString());
             }
@@ -61,19 +59,19 @@ public class MysqlBitacoraDAO implements BitacoraDAO {
     }
 
     @Override
-    public void modificar(Bitacora modelo) throws DAOException {
+    public void modificar(Incidente modelo) throws DAOException {
         PreparedStatement st = null;
         try {
             st = conn.prepareStatement(UPDATE);
             int col = 1;
-            st.setString(col++, modelo.getId_incidente());
-            st.setInt(col++, modelo.getUsuario());
-            st.setString(col++, modelo.getBitacoracol());
-            st.setString(col++, modelo.getRazonRechazo());
-            st.setInt(col++, modelo.getPorcentaje());
-            st.setString(col++, modelo.getDocumento());
-            st.setDate(col++, new Date(modelo.getCreado_el().getTime()));
-            st.setDate(col++, new Date(modelo.getActualizado_el().getTime()));
+            st.setString(col++, modelo.getNombre());
+            st.setString(col++, modelo.getDescripcion());
+            st.setInt(col++, modelo.getDesarrollador());
+            st.setInt(col++, modelo.getProbador());            
+            st.setDate(col++, new Date(modelo.getFechaCreacion().getTime()));
+            st.setInt(col++, modelo.getEstado());
+            st.setInt(col++, modelo.getIdProyecto());
+            st.setString(col++, modelo.getId());
             if(st.executeUpdate()<0){
                 throw new DAOException("Fallo al ejecutar el statement, no se pudo insertar  "+modelo.toString());
             }
@@ -91,12 +89,12 @@ public class MysqlBitacoraDAO implements BitacoraDAO {
     }
 
     @Override
-    public void eliminar(Bitacora modelo) throws DAOException {
+    public void eliminar(Incidente modelo) throws DAOException {
         PreparedStatement st = null;
         try {
             st = conn.prepareStatement(DELETE);
             int col=1;
-            st.setInt(col++, modelo.getId());
+            st.setString(col++, modelo.getId());
             if(st.executeUpdate()<0){
                 throw new DAOException("Fallo al ejecutar el statement, no se pudo borrar "+modelo.toString());
             }
@@ -113,63 +111,62 @@ public class MysqlBitacoraDAO implements BitacoraDAO {
         }
     }
     
-    private Bitacora convertir(ResultSet rs) throws SQLException{
-        return new Bitacora(
-                rs.getInt("id"),
-                rs.getString("id_incidente"),
-                rs.getInt("usuario"),
-                rs.getString("bitacoracol"),
-                rs.getString("razon_rechazo"),
-                rs.getInt("porcentaje"),
-                rs.getString("documento"),
-                rs.getDate("creado_el"),
-                rs.getDate("actualizado_el")
+    private Incidente convertir(ResultSet rs) throws SQLException{
+    return new Incidente(
+                rs.getString("id"),
+                rs.getString("nombre"),
+                rs.getString("descripcion"),
+                rs.getInt("desarrollador"),
+                rs.getInt("probador"),
+                rs.getDate("fecha_creacion"),
+                rs.getInt("estado"),
+                rs.getInt("id_proyecto")
         );
     }
-
+    
     @Override
-    public List<Bitacora> obtenerTodos() throws DAOException {
+    public List<Incidente> obtenerTodos() throws DAOException {
         PreparedStatement stat = null;
         ResultSet rs = null;
-        List<Bitacora> bitacoras = new ArrayList<>();
+        List<Incidente> incidentes = new ArrayList<>();
         
         try {
             stat = conn.prepareStatement(GETALL);
             rs= stat.executeQuery();
             while(rs.next()){
-                bitacoras.add(convertir(rs));
+                incidentes.add(convertir(rs));
             }
         } catch (SQLException e) {
             if(rs !=null){
                 try {
                     rs.close();
                 } catch (SQLException ex) {
-                    Logger.getLogger(MysqlBitacoraDAO.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(MySqlIncidenteDAO.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             if(stat !=null){
                 try {
                     stat.close();
                 } catch (SQLException ex) {
-                    Logger.getLogger(MysqlBitacoraDAO.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(MySqlIncidenteDAO.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             throw new DAOException("Error al ejecutar el SQL",e);
         }
-         return bitacoras;
+         return incidentes;
     }
 
     @Override
-    public Bitacora obtener(Integer id) throws DAOException {
+    public Incidente obtener(String id) throws DAOException {
         PreparedStatement stat = null;
          ResultSet rs = null;
-         Bitacora bitacora = null;
+         Incidente incidente = null;
          try {
             stat = conn.prepareStatement(GETONE);
-            stat.setInt(1, id);
+            stat.setString(1, id);
             rs= stat.executeQuery();
             if(rs.next()){
-                bitacora = convertir(rs);
+                incidente = convertir(rs);
             }else{
                 throw new DAOException("No se ha encontrado registro con el id=" + id);               
             }
@@ -178,19 +175,20 @@ public class MysqlBitacoraDAO implements BitacoraDAO {
                 try {
                     rs.close();
                 } catch (SQLException ex) {
-                    Logger.getLogger(MysqlBitacoraDAO.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(MySqlIncidenteDAO.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             if(stat !=null){
                 try {
                     stat.close();
                 } catch (SQLException ex) {
-                    Logger.getLogger(MysqlBitacoraDAO.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(MySqlIncidenteDAO.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             throw new DAOException("Error al ejecutar el SQL",e);
         }
-         return bitacora;
+         return incidente;
     }
+    
     
 }
