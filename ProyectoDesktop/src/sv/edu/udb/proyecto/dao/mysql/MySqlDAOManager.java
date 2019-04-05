@@ -12,6 +12,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import sv.edu.udb.proyecto.dao.DAOManager;
 import sv.edu.udb.proyecto.dao.DepartamentoDAO;
 import sv.edu.udb.proyecto.dao.RolDAO;
@@ -56,6 +58,15 @@ public class MySqlDAOManager implements DAOManager {
         
         Class.forName("com.mysql.jdbc.Driver"); 
         conn = DriverManager.getConnection("jdbc:mysql://"+host+"/"+database, username, password);
+    }
+    
+    @Override
+    public void close(){
+        try {
+            conn.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(MySqlDAOManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public MySqlDAOManager(String host,String username,String password,String database) throws SQLException, ClassNotFoundException {

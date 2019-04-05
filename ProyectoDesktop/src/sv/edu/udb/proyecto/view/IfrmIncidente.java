@@ -216,7 +216,7 @@ public class IfrmIncidente extends javax.swing.JInternalFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
        
-        if(btnGuardar.getText().equals("Guardar")){ //nuevo
+         //nuevo
             Incidente incidente = new Incidente();
             incidente.setNombre(txtNombre.getText());
             incidente.setDescripcion(txaDescripcion.getText());
@@ -229,35 +229,14 @@ public class IfrmIncidente extends javax.swing.JInternalFrame {
             incidente.setProbador(0);
             try {
                 Sesion.getDatos().getIncidenteDAO().insertar(incidente);
-                JOptionPane.showMessageDialog(this, "Proyecto guardado exitosamente");
+                JOptionPane.showMessageDialog(this, "Incidente guardado exitosamente");
                 limpiar();
             } catch (SQLException | ClassNotFoundException | DAOException ex) {
                 Logger.getLogger(IfrmIncidente.class.getName()).log(Level.SEVERE, null, ex);
-                JOptionPane.showMessageDialog(this, "No se pudo guardar el proyecto");
+                JOptionPane.showMessageDialog(this, "No se pudo guardar el incidente");
             }
            
-        }else{ //actualizar
-            try{
-                proyectoActual.setNombre(txtNombre.getText());
-                proyectoActual.setDescripcion(txaDescripcion.getText());
-                proyectoActual.setDepartamento(departamentos.stream()
-                    .filter(dep->dep.getNombre().equals(
-                    (String)cmbProyecto.getSelectedItem()
-                    )).map(dep->dep.getId()).findFirst().orElse(0));
-                proyectoActual.setEncargado(encargados.stream()
-                    .filter(enc->enc.getNombre().equals(
-                    (String)cmbEncargado.getSelectedItem()
-                    )).map(enc->enc.getId()).findFirst().orElse(0));
-                proyectoActual.setDocumento(null);
-                Sesion.getDatos().getProyectoDAO().modificar(proyectoActual);
-                JOptionPane.showMessageDialog(this, "Proyecto actualizado exitosamente");
-                limpiar();
-            }catch (SQLException | ClassNotFoundException | DAOException ex) {
-                Logger.getLogger(IfrmIncidente.class.getName()).log(Level.SEVERE, null, ex);
-                JOptionPane.showMessageDialog(this, "No se pudo actualizar el proyecto");
-            }
-        }
-        cargarTabla();
+        
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
@@ -282,11 +261,9 @@ public class IfrmIncidente extends javax.swing.JInternalFrame {
     // End of variables declaration//GEN-END:variables
 
     private void limpiar() {
-        lblId.setText("ID:");
+        
         txtNombre.setText("");
         txaDescripcion.setText("");
-        btnGuardar.setText("Guardar");        
-        btnBorrar.setEnabled(false);
-        proyectoActual = null;   
+        btnGuardar.setText("Guardar");           
     }
 }

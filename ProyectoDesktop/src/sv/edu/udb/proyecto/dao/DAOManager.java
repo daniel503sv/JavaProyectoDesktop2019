@@ -18,4 +18,5 @@ public interface DAOManager {
     BitacoraDAO getBitacoraDAO();
     ComentarioDAO getComentarioDAO();
     IncidenteDAO getIncidenteDAO();
+    void close();
 }
