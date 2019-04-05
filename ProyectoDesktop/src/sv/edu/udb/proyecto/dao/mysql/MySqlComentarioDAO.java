@@ -8,40 +8,38 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import sv.edu.udb.proyecto.dao.IncidenteDAO;
+import sv.edu.udb.proyecto.dao.ComentarioDAO;
 import sv.edu.udb.proyecto.dao.exception.DAOException;
-import sv.edu.udb.proyecto.modelo.Incidente;
+import sv.edu.udb.proyecto.modelo.Comentario;
 /**
  *
  * @author Ozkar
  */
-public class MysqlIncidenteDAO implements IncidenteDAO{
+public class MySqlComentarioDAO implements ComentarioDAO{
     
     Connection conn;
     
-    final String INSERT = "INSERT INTO incidente(nombre,descripcion,desarrollador,probador,fecha_creacion,estado,id_proyecto) VALUES(?,?,?,?,?,?,?)";
-    final String UPDATE = "UPDATE incidente SET nombre=?,descripcion=?,desarrollador=?,probador=?,fecha_creacion=?,estado=?,id_proyecto=? WHERE id=?";
-    final String DELETE = "DELETE FROM incidente WHERE id=?";
-    final String GETALL = "SELECT id,nombre,descripcion,desarrollador,probador,fecha_creacion,estado,id_proyecto FROM incidente";
-    final String GETONE = "SELECT id,nombre,descripcion,desarrollador,probador,fecha_creacion,estado,id_proyecto FROM incidente WHERE id=?";
+    final String INSERT = "INSERT INTO comentario(nombre,descripcion,usuario,bitacora_id,creado_el) VALUES(?,?,?,?,?)";
+    final String UPDATE = "UPDATE comentario SET nombre=?, descripcion=?, usuario=?, bitacora_id=?, creado_el=? WHERE id=?";
+    final String DELETE = "DELETE FROM comentario WHERE id=?";
+    final String GETALL = "SELECT id,nombre,descripcion,usuario,bitacora_id,creado_el FROM comentario";
+    final String GETONE = "SELECT id,nombre,descripcion,usuario,bitacora_id,creado_el FROM comentario WHERE id=?";
     
-    public MysqlIncidenteDAO(Connection conn){
+    public MySqlComentarioDAO(Connection conn){
         this.conn = conn;
     }
 
     @Override
-    public void insertar(Incidente modelo) throws DAOException {
+    public void insertar(Comentario modelo) throws DAOException {
         PreparedStatement st = null;
         try {
             st = conn.prepareStatement(INSERT);
             int col = 1;
             st.setString(col++, modelo.getNombre());
             st.setString(col++, modelo.getDescripcion());
-            st.setInt(col++, modelo.getDesarrollador());
-            st.setInt(col++, modelo.getProbador());            
-            st.setDate(col++, new Date(modelo.getFechaCreacion().getTime()));
-            st.setInt(col++, modelo.getEstado());
-            st.setInt(col++, modelo.getIdProyecto());
+            st.setInt(col++, modelo.getUsuario());
+            st.setInt(col++, modelo.getBitacora_id());
+            st.setDate(col++, new Date(modelo.getCreado_el().getTime()));            
             if(st.executeUpdate()<0){
                 throw new DAOException("Fallo al ejecutar el statement, no se pudo insertar  "+modelo.toString());
             }
@@ -59,21 +57,19 @@ public class MysqlIncidenteDAO implements IncidenteDAO{
     }
 
     @Override
-    public void modificar(Incidente modelo) throws DAOException {
+    public void modificar(Comentario modelo) throws DAOException {
         PreparedStatement st = null;
         try {
             st = conn.prepareStatement(UPDATE);
             int col = 1;
             st.setString(col++, modelo.getNombre());
             st.setString(col++, modelo.getDescripcion());
-            st.setInt(col++, modelo.getDesarrollador());
-            st.setInt(col++, modelo.getProbador());            
-            st.setDate(col++, new Date(modelo.getFechaCreacion().getTime()));
-            st.setInt(col++, modelo.getEstado());
-            st.setInt(col++, modelo.getIdProyecto());
-            st.setString(col++, modelo.getId());
+            st.setInt(col++, modelo.getUsuario());
+            st.setInt(col++, modelo.getBitacora_id());
+            st.setDate(col++, new Date(modelo.getCreado_el().getTime()));
+            st.setInt(col++, modelo.getId());
             if(st.executeUpdate()<0){
-                throw new DAOException("Fallo al ejecutar el statement, no se pudo insertar  "+modelo.toString());
+                throw new DAOException("Fallo al ejecutar el statement, no se pudo actualizar"+modelo.toString());
             }
         } catch (SQLException e) {
             throw new DAOException("No se pudo insertar  "+modelo.toString(),e);
@@ -83,18 +79,18 @@ public class MysqlIncidenteDAO implements IncidenteDAO{
                     st.close();
                 }
             } catch (SQLException e) {
-                throw new DAOException("Fallo en el Statement, no se pudo insertar  "+modelo.toString(),e);
+                throw new DAOException("Fallo en el Statement, no se pudo actualizar"+modelo.toString(),e);
             }
         }
     }
 
     @Override
-    public void eliminar(Incidente modelo) throws DAOException {
+    public void eliminar(Comentario modelo) throws DAOException {
         PreparedStatement st = null;
         try {
             st = conn.prepareStatement(DELETE);
             int col=1;
-            st.setString(col++, modelo.getId());
+            st.setInt(col++, modelo.getId());
             if(st.executeUpdate()<0){
                 throw new DAOException("Fallo al ejecutar el statement, no se pudo borrar "+modelo.toString());
             }
@@ -111,62 +107,60 @@ public class MysqlIncidenteDAO implements IncidenteDAO{
         }
     }
     
-    private Incidente convertir(ResultSet rs) throws SQLException{
-    return new Incidente(
-                rs.getString("id"),
+    private Comentario convertir(ResultSet rs) throws SQLException{
+        return new Comentario(
+                rs.getInt("id"),
                 rs.getString("nombre"),
                 rs.getString("descripcion"),
-                rs.getInt("desarrollador"),
-                rs.getInt("probador"),
-                rs.getDate("fecha_creacion"),
-                rs.getInt("estado"),
-                rs.getInt("id_proyecto")
+                rs.getInt("usuario"),
+                rs.getInt("bitacora_id"),
+                rs.getDate("creado_el")                
         );
     }
     
     @Override
-    public List<Incidente> obtenerTodos() throws DAOException {
+    public List<Comentario> obtenerTodos() throws DAOException {
         PreparedStatement stat = null;
         ResultSet rs = null;
-        List<Incidente> incidentes = new ArrayList<>();
+        List<Comentario> comentarios = new ArrayList<>();
         
         try {
             stat = conn.prepareStatement(GETALL);
             rs= stat.executeQuery();
             while(rs.next()){
-                incidentes.add(convertir(rs));
+                comentarios.add(convertir(rs));
             }
         } catch (SQLException e) {
             if(rs !=null){
                 try {
                     rs.close();
                 } catch (SQLException ex) {
-                    Logger.getLogger(MysqlIncidenteDAO.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(MySqlComentarioDAO.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             if(stat !=null){
                 try {
                     stat.close();
                 } catch (SQLException ex) {
-                    Logger.getLogger(MysqlIncidenteDAO.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(MySqlComentarioDAO.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             throw new DAOException("Error al ejecutar el SQL",e);
         }
-         return incidentes;
+         return comentarios;
     }
 
     @Override
-    public Incidente obtener(String id) throws DAOException {
+    public Comentario obtener(Integer id) throws DAOException {
         PreparedStatement stat = null;
          ResultSet rs = null;
-         Incidente incidente = null;
+         Comentario comentario = null;
          try {
             stat = conn.prepareStatement(GETONE);
-            stat.setString(1, id);
+            stat.setInt(1, id);
             rs= stat.executeQuery();
             if(rs.next()){
-                incidente = convertir(rs);
+                comentario = convertir(rs);
             }else{
                 throw new DAOException("No se ha encontrado registro con el id=" + id);               
             }
@@ -175,20 +169,19 @@ public class MysqlIncidenteDAO implements IncidenteDAO{
                 try {
                     rs.close();
                 } catch (SQLException ex) {
-                    Logger.getLogger(MysqlIncidenteDAO.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(MySqlComentarioDAO.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             if(stat !=null){
                 try {
                     stat.close();
                 } catch (SQLException ex) {
-                    Logger.getLogger(MysqlIncidenteDAO.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(MySqlComentarioDAO.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             throw new DAOException("Error al ejecutar el SQL",e);
         }
-         return incidente;
+         return comentario;
     }
-    
     
 }

@@ -19,6 +19,9 @@ import sv.edu.udb.proyecto.dao.DepartamentoDAO;
 import sv.edu.udb.proyecto.dao.RolDAO;
 import sv.edu.udb.proyecto.dao.UsuarioDAO;
 import sv.edu.udb.proyecto.dao.ProyectoDAO;
+import sv.edu.udb.proyecto.dao.BitacoraDAO;
+import sv.edu.udb.proyecto.dao.ComentarioDAO;
+import sv.edu.udb.proyecto.dao.IncidenteDAO;
 
 /**
  *
@@ -36,6 +39,9 @@ public class MySqlDAOManager implements DAOManager {
     private RolDAO roles = null;
     private DepartamentoDAO departamentos= null;
     private ProyectoDAO proyectos=null;
+    private IncidenteDAO incidentes=null;
+    private BitacoraDAO bitacoras=null;
+    private ComentarioDAO comentarios=null;
     
     
     public MySqlDAOManager() throws SQLException, FileNotFoundException, IOException, ClassNotFoundException {
@@ -102,6 +108,30 @@ public class MySqlDAOManager implements DAOManager {
            proyectos = new  MySqlProyectoDAO(conn);
        }
        return proyectos;    
-    } 
+    }
+    
+    @Override
+    public IncidenteDAO getIncidenteDAO() {
+     if(incidentes==null){
+           incidentes = new  MySqlIncidenteDAO(conn);
+       }
+       return incidentes;    
+    }
+    
+    @Override
+    public BitacoraDAO getBitacoraDAO() {
+     if(bitacoras==null){
+           bitacoras = new  MySqlBitacoraDAO(conn);
+       }
+       return bitacoras;    
+    }
+    
+    @Override
+    public ComentarioDAO getComentarioDAO() {
+     if(comentarios==null){
+           comentarios = new  MySqlComentarioDAO(conn);
+       }
+       return comentarios;    
+    }
     
 }

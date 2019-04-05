@@ -8,38 +8,42 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import sv.edu.udb.proyecto.dao.ComentarioDAO;
 import sv.edu.udb.proyecto.dao.exception.DAOException;
-import sv.edu.udb.proyecto.modelo.Comentario;
+import sv.edu.udb.proyecto.dao.BitacoraDAO;
+import sv.edu.udb.proyecto.modelo.Bitacora;
 /**
  *
  * @author Ozkar
  */
-public class MysqlComentarioDAO implements ComentarioDAO{
+public class MySqlBitacoraDAO implements BitacoraDAO {
     
     Connection conn;
     
-    final String INSERT = "INSERT INTO comentario(nombre,descripcion,usuario,bitacora_id,creado_el) VALUES(?,?,?,?,?)";
-    final String UPDATE = "UPDATE comentario SET nombre=?, descripcion=?, usuario=?, bitacora_id=?, creado_el=? WHERE id=?";
-    final String DELETE = "DELETE FROM comentario WHERE id=?";
-    final String GETALL = "SELECT id,nombre,descripcion,usuario,bitacora_id,creado_el FROM comentario";
-    final String GETONE = "SELECT id,nombre,descripcion,usuario,bitacora_id,creado_el FROM comentario WHERE id=?";
+    final String INSERT = "INSERT INTO bitacora(id_incidente,usuario,bitacoracol,razon_rechazo,porcentaje,documento,creado_el,actualizado_el) VALUES (?,?,?,?,?,?,?,?)";
+    final String UPDATE = "UPDATE bitacora SET id_incidente=?,usuario=?,bitacoracol=?,razon_rechazo=?,porcentaje=?,documento=?,creado_el=?,actualizado_el=? WHERE id=?";
+    final String DELETE = "DELETE FROM bitacora WHERE id=?";
+    final String GETALL = "SELECT id,id_incidente,usuario,bitacoracol,razon_rechazo,porcentaje,documento,creado_el,actualizado_el FROM bitacora";
+    final String GETONE = "SELECT id,id_incidente,usuario,bitacoracol,razon_rechazo,porcentaje,documento,creado_el,actualizado_el FROM bitacora WHERE id=?";
     
-    public MysqlComentarioDAO(Connection conn){
+    public MySqlBitacoraDAO(Connection conn){
         this.conn = conn;
     }
-
+    
     @Override
-    public void insertar(Comentario modelo) throws DAOException {
+    public void insertar(Bitacora modelo) throws DAOException {
         PreparedStatement st = null;
         try {
             st = conn.prepareStatement(INSERT);
             int col = 1;
-            st.setString(col++, modelo.getNombre());
-            st.setString(col++, modelo.getDescripcion());
+            st.setString(col++, modelo.getId_incidente());
             st.setInt(col++, modelo.getUsuario());
-            st.setInt(col++, modelo.getBitacora_id());
-            st.setDate(col++, new Date(modelo.getCreado_el().getTime()));            
+            st.setString(col++, modelo.getBitacoracol());
+            st.setString(col++, modelo.getRazonRechazo());
+            st.setInt(col++, modelo.getPorcentaje());
+            st.setString(col++, modelo.getDocumento());
+            st.setDate(col++, new Date(modelo.getCreado_el().getTime()));
+            st.setDate(col++, new Date(modelo.getActualizado_el().getTime()));
+            st.setInt(col++, modelo.getId());
             if(st.executeUpdate()<0){
                 throw new DAOException("Fallo al ejecutar el statement, no se pudo insertar  "+modelo.toString());
             }
@@ -57,19 +61,21 @@ public class MysqlComentarioDAO implements ComentarioDAO{
     }
 
     @Override
-    public void modificar(Comentario modelo) throws DAOException {
+    public void modificar(Bitacora modelo) throws DAOException {
         PreparedStatement st = null;
         try {
             st = conn.prepareStatement(UPDATE);
             int col = 1;
-            st.setString(col++, modelo.getNombre());
-            st.setString(col++, modelo.getDescripcion());
+            st.setString(col++, modelo.getId_incidente());
             st.setInt(col++, modelo.getUsuario());
-            st.setInt(col++, modelo.getBitacora_id());
+            st.setString(col++, modelo.getBitacoracol());
+            st.setString(col++, modelo.getRazonRechazo());
+            st.setInt(col++, modelo.getPorcentaje());
+            st.setString(col++, modelo.getDocumento());
             st.setDate(col++, new Date(modelo.getCreado_el().getTime()));
-            st.setInt(col++, modelo.getId());
+            st.setDate(col++, new Date(modelo.getActualizado_el().getTime()));
             if(st.executeUpdate()<0){
-                throw new DAOException("Fallo al ejecutar el statement, no se pudo actualizar"+modelo.toString());
+                throw new DAOException("Fallo al ejecutar el statement, no se pudo insertar  "+modelo.toString());
             }
         } catch (SQLException e) {
             throw new DAOException("No se pudo insertar  "+modelo.toString(),e);
@@ -79,13 +85,13 @@ public class MysqlComentarioDAO implements ComentarioDAO{
                     st.close();
                 }
             } catch (SQLException e) {
-                throw new DAOException("Fallo en el Statement, no se pudo actualizar"+modelo.toString(),e);
+                throw new DAOException("Fallo en el Statement, no se pudo insertar  "+modelo.toString(),e);
             }
         }
     }
 
     @Override
-    public void eliminar(Comentario modelo) throws DAOException {
+    public void eliminar(Bitacora modelo) throws DAOException {
         PreparedStatement st = null;
         try {
             st = conn.prepareStatement(DELETE);
@@ -107,60 +113,63 @@ public class MysqlComentarioDAO implements ComentarioDAO{
         }
     }
     
-    private Comentario convertir(ResultSet rs) throws SQLException{
-        return new Comentario(
+    private Bitacora convertir(ResultSet rs) throws SQLException{
+        return new Bitacora(
                 rs.getInt("id"),
-                rs.getString("nombre"),
-                rs.getString("descripcion"),
+                rs.getString("id_incidente"),
                 rs.getInt("usuario"),
-                rs.getInt("bitacora_id"),
-                rs.getDate("creado_el")                
+                rs.getString("bitacoracol"),
+                rs.getString("razon_rechazo"),
+                rs.getInt("porcentaje"),
+                rs.getString("documento"),
+                rs.getDate("creado_el"),
+                rs.getDate("actualizado_el")
         );
     }
-    
+
     @Override
-    public List<Comentario> obtenerTodos() throws DAOException {
+    public List<Bitacora> obtenerTodos() throws DAOException {
         PreparedStatement stat = null;
         ResultSet rs = null;
-        List<Comentario> comentarios = new ArrayList<>();
+        List<Bitacora> bitacoras = new ArrayList<>();
         
         try {
             stat = conn.prepareStatement(GETALL);
             rs= stat.executeQuery();
             while(rs.next()){
-                comentarios.add(convertir(rs));
+                bitacoras.add(convertir(rs));
             }
         } catch (SQLException e) {
             if(rs !=null){
                 try {
                     rs.close();
                 } catch (SQLException ex) {
-                    Logger.getLogger(MysqlComentarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(MySqlBitacoraDAO.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             if(stat !=null){
                 try {
                     stat.close();
                 } catch (SQLException ex) {
-                    Logger.getLogger(MysqlComentarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(MySqlBitacoraDAO.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             throw new DAOException("Error al ejecutar el SQL",e);
         }
-         return comentarios;
+         return bitacoras;
     }
 
     @Override
-    public Comentario obtener(Integer id) throws DAOException {
+    public Bitacora obtener(Integer id) throws DAOException {
         PreparedStatement stat = null;
          ResultSet rs = null;
-         Comentario comentario = null;
+         Bitacora bitacora = null;
          try {
             stat = conn.prepareStatement(GETONE);
             stat.setInt(1, id);
             rs= stat.executeQuery();
             if(rs.next()){
-                comentario = convertir(rs);
+                bitacora = convertir(rs);
             }else{
                 throw new DAOException("No se ha encontrado registro con el id=" + id);               
             }
@@ -169,19 +178,19 @@ public class MysqlComentarioDAO implements ComentarioDAO{
                 try {
                     rs.close();
                 } catch (SQLException ex) {
-                    Logger.getLogger(MysqlComentarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(MySqlBitacoraDAO.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             if(stat !=null){
                 try {
                     stat.close();
                 } catch (SQLException ex) {
-                    Logger.getLogger(MysqlComentarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(MySqlBitacoraDAO.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             throw new DAOException("Error al ejecutar el SQL",e);
         }
-         return comentario;
+         return bitacora;
     }
     
 }

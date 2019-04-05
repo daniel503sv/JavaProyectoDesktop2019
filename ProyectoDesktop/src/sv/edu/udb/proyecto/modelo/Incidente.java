@@ -1,6 +1,6 @@
 package sv.edu.udb.proyecto.modelo;
 
-import java.sql.Date;
+import java.util.Date;
 
 /**
  *
@@ -18,7 +18,7 @@ public class Incidente implements BaseModel {
     public static final String[] HEADERS = {"ID","Nombre","Descripción","Desarrollador","Probador","Fecha de creación","Estado","ID proyecto"};
     
     public Incidente(){
-    
+        this.fechaCreacion=new Date();
     }
     
     public Incidente(String nombre,String descripcion,int desarrollador,int probador,Date fechaCreacion,int estado, int idProyecto){
@@ -26,7 +26,7 @@ public class Incidente implements BaseModel {
         this.descripcion = descripcion;
         this.desarrollador = desarrollador;
         this.probador = probador;
-        this.fechaCreacion = fechaCreacion;
+        this.fechaCreacion = new Date();
         this.estado = estado;
         this.idProyecto = idProyecto;
     }
@@ -37,7 +37,7 @@ public class Incidente implements BaseModel {
         this.descripcion = descripcion;
         this.desarrollador = desarrollador;
         this.probador = probador;
-        this.fechaCreacion = fechaCreacion;
+        this.fechaCreacion = new Date();
         this.estado = estado;
         this.idProyecto = idProyecto;
     }

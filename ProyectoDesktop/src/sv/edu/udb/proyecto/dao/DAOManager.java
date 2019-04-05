@@ -15,5 +15,8 @@ public interface DAOManager {
     RolDAO getRolDAO();
     DepartamentoDAO getDepartamentoDAO();
     ProyectoDAO getProyectoDAO();
+    BitacoraDAO getBitacoraDAO();
+    ComentarioDAO getComentarioDAO();
+    IncidenteDAO getIncidenteDAO();
     void close();
 }
