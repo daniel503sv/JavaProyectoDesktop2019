@@ -102,6 +102,11 @@ public class FrmMaster extends javax.swing.JFrame {
 
         copyMenuItem.setMnemonic('y');
         copyMenuItem.setText("Incidentes");
+        copyMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                copyMenuItemActionPerformed(evt);
+            }
+        });
         editMenu.add(copyMenuItem);
 
         pasteMenuItem.setMnemonic('p');
@@ -186,6 +191,15 @@ public class FrmMaster extends javax.swing.JFrame {
             frm.show();
         }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void copyMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_copyMenuItemActionPerformed
+        
+        if(!IfrmIncidente.activo){
+            IfrmIncidente frm = new IfrmIncidente();
+            this.desktopPane.add(frm);
+            frm.show();
+        }
+    }//GEN-LAST:event_copyMenuItemActionPerformed
 
     /**
      * @param args the command line arguments
