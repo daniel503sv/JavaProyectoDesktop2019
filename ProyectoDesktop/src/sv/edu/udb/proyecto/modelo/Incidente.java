@@ -7,7 +7,7 @@ import java.util.Date;
  * @author Ozkar
  */
 public class Incidente implements BaseModel {
-    private String id;
+    private int id;
     private String nombre;
     private String descripcion;
     private int desarrollador;
@@ -15,13 +15,16 @@ public class Incidente implements BaseModel {
     private Date fechaCreacion;
     private int estado;
     private int idProyecto;
-    public static final String[] HEADERS = {"ID","Nombre","Descripción","Desarrollador","Probador","Fecha de creación","Estado","ID proyecto"};
+    private String codigo;
+    private String detalleCaso;
+    private Date fechaEntrega;
+    public static final String[] HEADERS = {"ID","Nombre","Descripción","Desarrollador","Probador","Fecha de creación","Estado","Proyecto"};
     
     public Incidente(){
         this.fechaCreacion=new Date();
     }
     
-    public Incidente(String nombre,String descripcion,int desarrollador,int probador,Date fechaCreacion,int estado, int idProyecto){
+    public Incidente(String nombre,String descripcion,int desarrollador,int probador,Date fechaCreacion,int estado, int idProyecto,String codigo,String detalleCaso,Date fechaEntrega){
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.desarrollador = desarrollador;
@@ -29,9 +32,12 @@ public class Incidente implements BaseModel {
         this.fechaCreacion = new Date();
         this.estado = estado;
         this.idProyecto = idProyecto;
+        this.codigo = codigo;
+        this.detalleCaso = detalleCaso;
+        this.fechaEntrega = fechaEntrega;
     }
     
-    public Incidente(String id, String nombre,String descripcion,int desarrollador,int probador,Date fechaCreacion,int estado, int idProyecto){
+    public Incidente(int id, String nombre,String descripcion,int desarrollador,int probador,Date fechaCreacion,int estado, int idProyecto,String codigo,String detalleCaso,Date fechaEntrega){
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -40,14 +46,41 @@ public class Incidente implements BaseModel {
         this.fechaCreacion = new Date();
         this.estado = estado;
         this.idProyecto = idProyecto;
+        this.codigo = codigo;
+        this.detalleCaso = detalleCaso;
+        this.fechaEntrega = fechaEntrega;
     }
     
-    public String getId() {
+    public int getId() {
         return id;
     }
     
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
+    public String getDetalleCaso() {
+        return detalleCaso;
+    }
+
+    public void setDetalleCaso(String detalleCaso) {
+        this.detalleCaso = detalleCaso;
+    }
+
+    public Date getFechaEntrega() {
+        return fechaEntrega;
+    }
+
+    public void setFechaEntrega(Date fechaEntrega) {
+        this.fechaEntrega = fechaEntrega;
     }
     
     public String getNombre() {

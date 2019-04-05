@@ -8,42 +8,45 @@ import java.sql.Date;
  */
 public class Bitacora implements BaseModel {
     private Integer id;
-    private String id_incidente;
+    private Integer id_incidente;
     private int usuario;
-    private String bitacoracol;
-    private String razonRechazo;
     private int porcentaje;
     private String documento;
     private Date creado_el;
     private Date actualizado_el;
+    private String detalle;
     public static final String[] HEADERS = {"ID","ID Incidente","Usuario","Bitacora","Razón de rechazo","Porcentaje","Documento","Creado","Actualizado"};
     
+    @Override
+    public Object[] getData(){
+        Object [] data = {this.id,this.id_incidente,this.usuario,this.porcentaje,this.documento,
+        this.creado_el,this.actualizado_el};
+        return data;
+    }
     public Bitacora(){
     
     }
     
-    public Bitacora(String id_incidente,int usuario,String bitacoracol,String razonRechazo,int porcentaje,String documento,Date creado_el, Date actualizado_el){
+    public Bitacora(String detalle,int id_incidente,int usuario,int porcentaje,String documento,Date creado_el, Date actualizado_el){
         this.id_incidente = id_incidente;
-        this.usuario = usuario;
-        this.bitacoracol = bitacoracol;
-        this.razonRechazo = razonRechazo;
+        this.usuario = usuario;      
         this.porcentaje = porcentaje;
         this.documento = documento;
         this.creado_el = creado_el;
         this.actualizado_el = actualizado_el;
-        
+        this.detalle = detalle;
+
     }
     
-    public Bitacora(Integer id, String id_incidente,int usuario,String bitacoracol,String razonRechazo,int porcentaje,String documento,Date creado_el, Date actualizado_el){
+    public Bitacora(Integer id,String detalle, int id_incidente,int usuario,int porcentaje,String documento,Date creado_el, Date actualizado_el){
         this.id = id;
         this.id_incidente = id_incidente;
         this.usuario = usuario;
-        this.bitacoracol = bitacoracol;
-        this.razonRechazo = razonRechazo;
         this.porcentaje = porcentaje;
         this.documento = documento;
         this.creado_el = creado_el;
         this.actualizado_el = actualizado_el;
+        this.detalle = detalle;
         
     }
     
@@ -51,15 +54,25 @@ public class Bitacora implements BaseModel {
         return id;
     }
 
+    public String getDetalle() {
+        return detalle;
+    }
+
+    public void setDetalle(String detalle) {
+        this.detalle = detalle;
+    }
+    
+    
+
     public void setId(Integer id) {
         this.id = id;
     }
 
-    public String getId_incidente() {
+    public Integer getId_incidente() {
         return id_incidente;
     }
 
-    public void setId_incidente(String id_incidente) {
+    public void setId_incidente(int id_incidente) {
         this.id_incidente = id_incidente;
     }
 
@@ -70,23 +83,7 @@ public class Bitacora implements BaseModel {
     public void setUsuario(int usuario) {
         this.usuario = usuario;
     }
-
-    public String getBitacoracol() {
-        return bitacoracol;
-    }
-    
-    public void setBitacoracol(String bitacoracol) {
-        this.bitacoracol = bitacoracol;
-    }
-
-    public String getRazonRechazo() {
-        return razonRechazo;
-    }
-
-    public void setRazonRechazo(String razonRechazo) {
-        this.razonRechazo = razonRechazo;
-    }
-   
+     
     public int getPorcentaje() {
         return porcentaje;
     }
@@ -119,17 +116,7 @@ public class Bitacora implements BaseModel {
         this.actualizado_el = actualizado_el;
     }
     
-    @Override
-    public String toString(){
-        return "Bitacora{" + "id = " +id +" id incidente = " +id_incidente + " usuario = " +usuario +" bitacoracol = " +bitacoracol
-                + " razon de rechazo = " +razonRechazo + " porcentaje = " +porcentaje +" documento = " +documento 
-                +" creado = " +creado_el + " actualizado = "+actualizado_el +'}';
-    }
+   
     
-    @Override
-    public Object[] getData(){
-        Object [] data = {this.id,this.id_incidente,this.usuario,this.bitacoracol,this.razonRechazo,this.porcentaje,this.documento,
-        this.creado_el,this.actualizado_el};
-        return data;
-    }
+   
 }

@@ -64,9 +64,9 @@ public class FrmLogin extends javax.swing.JFrame {
 
         jLabel2.setText("Contraseña");
 
-        txtUsuario.setText("admin");
+        txtUsuario.setText("prog@rh.com");
 
-        txtPassword.setText("password");
+        txtPassword.setText("123456");
 
         jLabel3.setFont(new java.awt.Font("Verdana", 0, 20)); // NOI18N
         jLabel3.setText("Administrador de proyectos");
@@ -154,11 +154,7 @@ public class FrmLogin extends javax.swing.JFrame {
             } catch (DAOException ex) {
                 Utils.mostrarMensaje("Ingreso", "Usuario o contraseña incorrecta");
                 Logger.getLogger(FrmLogin.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (InstantiationException ex) {
-                Logger.getLogger(FrmLogin.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IllegalAccessException ex) {
-                Logger.getLogger(FrmLogin.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (UnsupportedLookAndFeelException ex) {
+            } catch (InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
                 Logger.getLogger(FrmLogin.class.getName()).log(Level.SEVERE, null, ex);
             }
         } catch (SQLException ex) {

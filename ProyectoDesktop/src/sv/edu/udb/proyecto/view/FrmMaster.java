@@ -39,15 +39,18 @@ public class FrmMaster extends javax.swing.JFrame {
         desktopPane = new javax.swing.JDesktopPane();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
-        openMenuItem = new javax.swing.JMenuItem();
-        saveMenuItem = new javax.swing.JMenuItem();
+        omiUsuarios = new javax.swing.JMenuItem();
+        omiDepartamentos = new javax.swing.JMenuItem();
         exitMenuItem = new javax.swing.JMenuItem();
         editMenu = new javax.swing.JMenu();
-        cutMenuItem = new javax.swing.JMenuItem();
-        copyMenuItem = new javax.swing.JMenuItem();
-        pasteMenuItem = new javax.swing.JMenuItem();
-        jMenu1 = new javax.swing.JMenu();
+        omiProyectos = new javax.swing.JMenuItem();
+        omiIncidentes = new javax.swing.JMenuItem();
+        omiAsignar = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
+        omiDatos = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -59,23 +62,23 @@ public class FrmMaster extends javax.swing.JFrame {
         fileMenu.setMnemonic('f');
         fileMenu.setText("Administrar");
 
-        openMenuItem.setMnemonic('o');
-        openMenuItem.setText("Usuarios");
-        openMenuItem.addActionListener(new java.awt.event.ActionListener() {
+        omiUsuarios.setMnemonic('o');
+        omiUsuarios.setText("Usuarios");
+        omiUsuarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                openMenuItemActionPerformed(evt);
+                omiUsuariosActionPerformed(evt);
             }
         });
-        fileMenu.add(openMenuItem);
+        fileMenu.add(omiUsuarios);
 
-        saveMenuItem.setMnemonic('s');
-        saveMenuItem.setText("Departamentos");
-        saveMenuItem.addActionListener(new java.awt.event.ActionListener() {
+        omiDepartamentos.setMnemonic('s');
+        omiDepartamentos.setText("Departamentos");
+        omiDepartamentos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                saveMenuItemActionPerformed(evt);
+                omiDepartamentosActionPerformed(evt);
             }
         });
-        fileMenu.add(saveMenuItem);
+        fileMenu.add(omiDepartamentos);
 
         exitMenuItem.setMnemonic('x');
         exitMenuItem.setText("Exit");
@@ -91,39 +94,59 @@ public class FrmMaster extends javax.swing.JFrame {
         editMenu.setMnemonic('e');
         editMenu.setText("Proyectos");
 
-        cutMenuItem.setMnemonic('t');
-        cutMenuItem.setText("Proyectos");
-        cutMenuItem.addActionListener(new java.awt.event.ActionListener() {
+        omiProyectos.setMnemonic('t');
+        omiProyectos.setText("Proyectos");
+        omiProyectos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cutMenuItemActionPerformed(evt);
+                omiProyectosActionPerformed(evt);
             }
         });
-        editMenu.add(cutMenuItem);
+        editMenu.add(omiProyectos);
 
-        copyMenuItem.setMnemonic('y');
-        copyMenuItem.setText("Incidentes");
-        copyMenuItem.addActionListener(new java.awt.event.ActionListener() {
+        omiIncidentes.setMnemonic('y');
+        omiIncidentes.setText("Incidentes");
+        omiIncidentes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                copyMenuItemActionPerformed(evt);
+                omiIncidentesActionPerformed(evt);
             }
         });
-        editMenu.add(copyMenuItem);
+        editMenu.add(omiIncidentes);
 
-        pasteMenuItem.setMnemonic('p');
-        pasteMenuItem.setText("Asignar");
-        editMenu.add(pasteMenuItem);
+        omiAsignar.setMnemonic('p');
+        omiAsignar.setText("Asignar");
+        editMenu.add(omiAsignar);
 
         menuBar.add(editMenu);
 
-        jMenu1.setText("Información");
+        jMenu2.setText("Incidentes");
 
-        jMenuItem1.setText("Datos");
+        jMenuItem1.setText("Aprobar");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem1ActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
+        jMenu2.add(jMenuItem1);
+
+        jMenuItem2.setText("Bitacora");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem2);
+
+        menuBar.add(jMenu2);
+
+        jMenu1.setText("Información");
+
+        omiDatos.setText("Datos");
+        omiDatos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                omiDatosActionPerformed(evt);
+            }
+        });
+        jMenu1.add(omiDatos);
 
         menuBar.add(jMenu1);
 
@@ -147,24 +170,24 @@ public class FrmMaster extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_exitMenuItemActionPerformed
 
-    private void saveMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveMenuItemActionPerformed
+    private void omiDepartamentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_omiDepartamentosActionPerformed
         if (!IfrmDepartamento.activo) {
             IfrmDepartamento frmDepa = new IfrmDepartamento();
             this.desktopPane.add(frmDepa);
             frmDepa.show();
         }
         // TODO add your handling code here:
-    }//GEN-LAST:event_saveMenuItemActionPerformed
+    }//GEN-LAST:event_omiDepartamentosActionPerformed
 
-    private void openMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openMenuItemActionPerformed
+    private void omiUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_omiUsuariosActionPerformed
         if (!IfrmUsuario.activo) {
             IfrmUsuario frmUsr = new IfrmUsuario();
             this.desktopPane.add(frmUsr);
             frmUsr.show();
         }
-    }//GEN-LAST:event_openMenuItemActionPerformed
+    }//GEN-LAST:event_omiUsuariosActionPerformed
 
-    private void cutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cutMenuItemActionPerformed
+    private void omiProyectosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_omiProyectosActionPerformed
         if (!IfrmProyecto.activo) {
             IfrmProyecto proyecto = new IfrmProyecto();
             this.desktopPane.add(proyecto);
@@ -172,7 +195,7 @@ public class FrmMaster extends javax.swing.JFrame {
 
         }
         // TODO add your handling code here:
-    }//GEN-LAST:event_cutMenuItemActionPerformed
+    }//GEN-LAST:event_omiProyectosActionPerformed
 
     private void close(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_close
         try {
@@ -184,22 +207,37 @@ public class FrmMaster extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_close
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        if(!IfrmInformacion.activo){
+    private void omiDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_omiDatosActionPerformed
+        if (!IfrmInformacion.activo) {
             IfrmInformacion frm = new IfrmInformacion();
             this.desktopPane.add(frm);
             frm.show();
         }
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_omiDatosActionPerformed
 
-    private void copyMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_copyMenuItemActionPerformed
-        
-        if(!IfrmIncidente.activo){
+    private void omiIncidentesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_omiIncidentesActionPerformed
+
+        if (!IfrmIncidente.activo) {
             IfrmIncidente frm = new IfrmIncidente();
             this.desktopPane.add(frm);
             frm.show();
         }
-    }//GEN-LAST:event_copyMenuItemActionPerformed
+    }//GEN-LAST:event_omiIncidentesActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        if (!IfrmAprobar.activo) {
+            IfrmAprobar frm = new IfrmAprobar();
+            this.desktopPane.add(frm);
+            frm.show();
+        }    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        if (!IfrmBitacora.activo) {
+            IfrmBitacora frm = new IfrmBitacora();
+            this.desktopPane.add(frm);
+            frm.show();
+        }  // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -237,18 +275,21 @@ public class FrmMaster extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem copyMenuItem;
-    private javax.swing.JMenuItem cutMenuItem;
     private javax.swing.JDesktopPane desktopPane;
     private javax.swing.JMenu editMenu;
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuBar menuBar;
-    private javax.swing.JMenuItem openMenuItem;
-    private javax.swing.JMenuItem pasteMenuItem;
-    private javax.swing.JMenuItem saveMenuItem;
+    private javax.swing.JMenuItem omiAsignar;
+    private javax.swing.JMenuItem omiDatos;
+    private javax.swing.JMenuItem omiDepartamentos;
+    private javax.swing.JMenuItem omiIncidentes;
+    private javax.swing.JMenuItem omiProyectos;
+    private javax.swing.JMenuItem omiUsuarios;
     // End of variables declaration//GEN-END:variables
 
 }

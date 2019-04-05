@@ -19,11 +19,11 @@ public class MySqlBitacoraDAO implements BitacoraDAO {
     
     Connection conn;
     
-    final String INSERT = "INSERT INTO bitacora(id_incidente,usuario,bitacoracol,razon_rechazo,porcentaje,documento,creado_el,actualizado_el) VALUES (?,?,?,?,?,?,?,?)";
-    final String UPDATE = "UPDATE bitacora SET id_incidente=?,usuario=?,bitacoracol=?,razon_rechazo=?,porcentaje=?,documento=?,creado_el=?,actualizado_el=? WHERE id=?";
+    final String INSERT = "INSERT INTO bitacora(detalle,id_incidente,usuario,porcentaje,documento,creado_el,actualizado_el) VALUES (?,?,?,?,?,?,?)";
+    final String UPDATE = "UPDATE bitacora SET detalle=?,id_incidente=?,usuario=?,porcentaje=?,documento=?,creado_el=?,actualizado_el=? WHERE id=?";
     final String DELETE = "DELETE FROM bitacora WHERE id=?";
-    final String GETALL = "SELECT id,id_incidente,usuario,bitacoracol,razon_rechazo,porcentaje,documento,creado_el,actualizado_el FROM bitacora";
-    final String GETONE = "SELECT id,id_incidente,usuario,bitacoracol,razon_rechazo,porcentaje,documento,creado_el,actualizado_el FROM bitacora WHERE id=?";
+    final String GETALL = "SELECT id,detalle,id_incidente,usuario,porcentaje,documento,creado_el,actualizado_el FROM bitacora";
+    final String GETONE = "SELECT id,detalle,id_incidente,usuario,porcentaje,documento,creado_el,actualizado_el FROM bitacora WHERE id=?";
     
     public MySqlBitacoraDAO(Connection conn){
         this.conn = conn;
@@ -35,10 +35,9 @@ public class MySqlBitacoraDAO implements BitacoraDAO {
         try {
             st = conn.prepareStatement(INSERT);
             int col = 1;
-            st.setString(col++, modelo.getId_incidente());
+            st.setString(col++, modelo.getDetalle());
+            st.setInt(col++, modelo.getId_incidente());
             st.setInt(col++, modelo.getUsuario());
-            st.setString(col++, modelo.getBitacoracol());
-            st.setString(col++, modelo.getRazonRechazo());
             st.setInt(col++, modelo.getPorcentaje());
             st.setString(col++, modelo.getDocumento());
             st.setDate(col++, new Date(modelo.getCreado_el().getTime()));
@@ -66,10 +65,9 @@ public class MySqlBitacoraDAO implements BitacoraDAO {
         try {
             st = conn.prepareStatement(UPDATE);
             int col = 1;
-            st.setString(col++, modelo.getId_incidente());
+            st.setString(col++, modelo.getDetalle());
+            st.setInt(col++, modelo.getId_incidente());
             st.setInt(col++, modelo.getUsuario());
-            st.setString(col++, modelo.getBitacoracol());
-            st.setString(col++, modelo.getRazonRechazo());
             st.setInt(col++, modelo.getPorcentaje());
             st.setString(col++, modelo.getDocumento());
             st.setDate(col++, new Date(modelo.getCreado_el().getTime()));
@@ -116,10 +114,9 @@ public class MySqlBitacoraDAO implements BitacoraDAO {
     private Bitacora convertir(ResultSet rs) throws SQLException{
         return new Bitacora(
                 rs.getInt("id"),
-                rs.getString("id_incidente"),
+                rs.getString("detalle"),
+                rs.getInt("id_incidente"),
                 rs.getInt("usuario"),
-                rs.getString("bitacoracol"),
-                rs.getString("razon_rechazo"),
                 rs.getInt("porcentaje"),
                 rs.getString("documento"),
                 rs.getDate("creado_el"),

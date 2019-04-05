@@ -16,6 +16,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import sv.edu.udb.proyecto.dao.UsuarioDAO;
 import sv.edu.udb.proyecto.dao.exception.DAOException;
+import sv.edu.udb.proyecto.modelo.Departamento;
+import sv.edu.udb.proyecto.modelo.Rol;
 import sv.edu.udb.proyecto.modelo.Usuario;
 
 /**
@@ -29,6 +31,9 @@ public class MySqlUsuarioDAO implements UsuarioDAO {
     final String UPDATE_SIN_PASS = "UPDATE usuario SET nombre=?,apellido=?,correo=?,telefono=?,departamento_id=?,rol_id=?,fecha_creacion=? WHERE id=?";
     final String DELETE = "DELETE FROM usuario WHERE id=?";
     final String GETALL = "SELECT id,nombre,apellido,correo,telefono,password,departamento_id,rol_id,fecha_creacion FROM usuario";
+    final String BY_ROL = " WHERE rol_id=?";
+    final String BY_DEPARTAMENTO = " WHERE departamento_id=?";
+    final String BY_ROL_DEPARTAMENTO = " WHERE rol_id=? AND departamento_id=?";
     final String GETONE = "SELECT id,nombre,apellido,correo,telefono,password,departamento_id,rol_id,fecha_creacion FROM usuario WHERE id=?";
     final String GETUSER = "SELECT id,nombre,apellido,correo,telefono,password,departamento_id,rol_id,fecha_creacion FROM usuario WHERE correo=? AND password=SHA2(?,256)";
     
@@ -239,6 +244,108 @@ public class MySqlUsuarioDAO implements UsuarioDAO {
                 rs.getInt("rol_id"),
                 new Date(rs.getDate("fecha_creacion").getTime())
         );
+    }
+
+    @Override
+    public List<Usuario> obtenerUsuariosRol(Rol rol) throws DAOException {
+   
+        PreparedStatement stat = null;
+        ResultSet rs = null;
+        List<Usuario> usuarios = new ArrayList<>();
+        
+        try {
+            stat = conn.prepareStatement(GETALL+BY_ROL);
+            stat.setInt(1, rol.getId());
+            rs= stat.executeQuery();
+            while(rs.next()){
+                usuarios.add(convertir(rs));
+            }
+        } catch (SQLException e) {
+            if(rs !=null){
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(MySqlUsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if(stat !=null){
+                try {
+                    stat.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(MySqlUsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            throw new DAOException("Error al ejecutar el SQL",e);
+        }
+         return usuarios;    
+    }
+
+    @Override
+    public List<Usuario> obtenerUsuariosDepartamento(Departamento departamento) throws DAOException {
+  PreparedStatement stat = null;
+        ResultSet rs = null;
+        List<Usuario> usuarios = new ArrayList<>();
+        
+        try {
+            stat = conn.prepareStatement(GETALL+BY_DEPARTAMENTO);
+            stat.setInt(1, departamento.getId());
+
+            rs= stat.executeQuery();
+            while(rs.next()){
+                usuarios.add(convertir(rs));
+            }
+        } catch (SQLException e) {
+            if(rs !=null){
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(MySqlUsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if(stat !=null){
+                try {
+                    stat.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(MySqlUsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            throw new DAOException("Error al ejecutar el SQL",e);
+        }
+         return usuarios;        }
+
+    @Override
+    public List<Usuario> obtenerUsuariosRolDepartamento(Rol rol, Departamento departamento) throws DAOException {
+  PreparedStatement stat = null;
+        ResultSet rs = null;
+        List<Usuario> usuarios = new ArrayList<>();
+        
+        try {
+            stat = conn.prepareStatement(GETALL+BY_ROL_DEPARTAMENTO);
+            stat.setInt(1, rol.getId());
+            stat.setInt(2, departamento.getId());
+            rs= stat.executeQuery();
+            
+            while(rs.next()){
+                usuarios.add(convertir(rs));
+            }
+        } catch (SQLException e) {
+            if(rs !=null){
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(MySqlUsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if(stat !=null){
+                try {
+                    stat.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(MySqlUsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            throw new DAOException("Error al ejecutar el SQL",e);
+        }
+         return usuarios;    
     }
 
 }

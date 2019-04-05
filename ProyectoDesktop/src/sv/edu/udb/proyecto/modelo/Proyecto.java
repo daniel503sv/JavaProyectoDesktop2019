@@ -16,7 +16,7 @@ public class Proyecto implements BaseModel{
     private Integer departamento;
     private String documento;
     private Integer encargado;
-    public static final String[] HEADERS = {"ID","Nombre","Descripción","Departamento","Documento","Encargado"};
+    public static final String[] HEADERS = {"ID","Nombre","Descripción","Departamento","Encargado"};
 
     public Proyecto() {
     }
@@ -95,7 +95,7 @@ public class Proyecto implements BaseModel{
 
     @Override
     public Object[] getData() {
-        Object[] data = {this.id,this.nombre,this.descripcion,this.departamento,this.documento,this.encargado};
+        Object[] data = {this.id,this.nombre,this.descripcion,this.departamento,this.encargado};
         return data;
     }   
 }

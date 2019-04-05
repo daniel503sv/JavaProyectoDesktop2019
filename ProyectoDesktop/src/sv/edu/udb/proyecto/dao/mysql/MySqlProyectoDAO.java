@@ -25,7 +25,7 @@ import sv.edu.udb.proyecto.modelo.Proyecto;
 public class MySqlProyectoDAO implements ProyectoDAO {
     
     final String INSERT = "INSERT INTO proyecto(nombre,departamento,descripcion,documento,encargado) values(?,?,?,?,?)";
-    final String UPDATE = "UPDATE proyeto SET nombre=?,departamento=?,descripcion=?,documento=?,encargado=? WHERE id=?";
+    final String UPDATE = "UPDATE proyecto SET nombre=?,departamento=?,descripcion=?,documento=?,encargado=? WHERE id=?";
     final String DELETE = "DELETE FROM proyecto WHERE id=?";
     final String GETALL = "SELECT id,nombre,departamento,descripcion,documento,encargado FROM proyecto";
     final String GETONE = "SELECT id,nombre,departamento,descripcion,documento,encargado FROM proyecto WHERE id=?";
@@ -53,6 +53,7 @@ public class MySqlProyectoDAO implements ProyectoDAO {
                 throw new DAOException("Fallo al ejecutar el statement, no se pudo insertar  "+modelo.toString());
             }
         } catch (SQLException e) {
+            System.out.println(e);
             throw new DAOException("No se pudo insertar  "+modelo.toString(),e);
         } finally{
             try {
