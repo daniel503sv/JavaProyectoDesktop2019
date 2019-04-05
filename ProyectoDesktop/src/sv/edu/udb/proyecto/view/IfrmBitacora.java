@@ -6,10 +6,12 @@
 package sv.edu.udb.proyecto.view;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import sv.edu.udb.proyecto.Sesion;
 import sv.edu.udb.proyecto.dao.exception.DAOException;
@@ -82,6 +84,8 @@ public class IfrmBitacora extends javax.swing.JInternalFrame {
         txtDetalle = new javax.swing.JTextArea();
         jLabel3 = new javax.swing.JLabel();
         txtCodigo = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        txtActual = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         lbxBitacora = new javax.swing.JList<>();
         jButton1 = new javax.swing.JButton();
@@ -127,6 +131,10 @@ public class IfrmBitacora extends javax.swing.JInternalFrame {
 
         txtCodigo.setEditable(false);
 
+        jLabel4.setText("Avance Actual");
+
+        txtActual.setEditable(false);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -136,16 +144,20 @@ public class IfrmBitacora extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane3)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtAvance, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(29, 29, 29)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtCodigo)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtAvance, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel2))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtCodigo)
+                            .addComponent(txtActual))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -155,12 +167,20 @@ public class IfrmBitacora extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txtAvance, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3)
-                    .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(txtActual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -169,8 +189,18 @@ public class IfrmBitacora extends javax.swing.JInternalFrame {
         jScrollPane2.setViewportView(lbxBitacora);
 
         jButton1.setText("Agregar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Salir");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -225,25 +255,80 @@ public class IfrmBitacora extends javax.swing.JInternalFrame {
                     return inc.getCodigo().equals((String) dtm.getValueAt(fila, 0));
                 }).findFirst().orElse(null);
 
-                bitacoras = Sesion.getDatos().getBitacoraDAO().obtenerTodos().stream().filter(b -> {
-                    return b.getId_incidente() == incidenteActivo.getId();
-                }).collect(Collectors.toList());
+               
 
                 actualizarLista();
                 txtCodigo.setText(incidenteActivo.getCodigo());
-                txtDetalle.setText(incidenteActivo.getDetalleCaso());
             } catch (SQLException | ClassNotFoundException | DAOException ex) {
                 Logger.getLogger(IfrmAprobar.class.getName()).log(Level.SEVERE, null, ex);
             }
         }        // TODO add your handling code here:
     }//GEN-LAST:event_jtblIncidentesMouseClicked
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Bitacora bit = new Bitacora();
+        int avance = Integer.parseInt(txtAvance.getText());
+        if( (avanceActual()+avance)>100){
+            JOptionPane.showMessageDialog(null, "El porcentaje total de avance no puede ser mayor a 100");
+            return;
+        }
+        
+        bit.setId_incidente(incidenteActivo.getId());
+        bit.setDetalle(txtDetalle.getText());
+        bit.setPorcentaje(avance);
+        bit.setUsuario(Sesion.getUsuario().getId());
+        try {
+            Sesion.getDatos().getBitacoraDAO().insertar(bit);
+        } catch (SQLException | ClassNotFoundException | DAOException ex) {
+            JOptionPane.showMessageDialog(this, "No se pudo guardar la bitacora");
+            System.out.println(ex);
+            Logger.getLogger(IfrmBitacora.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        actualizarLista();
+        if(avanceActual()==100){
+            JOptionPane.showMessageDialog(this, "Felicidades has completado un incidente, estate atento a la resolucion");
+            incidenteActivo.setEstado(5);
+            try {
+                Sesion.getDatos().getIncidenteDAO().modificar(incidenteActivo);
+                limpiar();
+            } catch (SQLException | ClassNotFoundException | DAOException ex) {
+                JOptionPane.showMessageDialog(this, "Ha ocurrido un error al guardar el incidente");
+                System.out.println(ex);
+                Logger.getLogger(IfrmBitacora.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        activo=false;
+        this.dispose();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private int avanceActual(){
+        int avance = 0;
+        for(Bitacora b:bitacoras){
+            avance += b.getPorcentaje();
+        }
+        return avance;
+    }
     private void actualizarLista() {
-        BitacoraListModel lmodel = new BitacoraListModel();
-        bitacoras.forEach(bit -> {
-            lmodel.addBitacora(bit);
-        });
-        lbxBitacora.setModel(lmodel);
+        try {
+            bitacoras = Sesion.getDatos().getBitacoraDAO().obtenerTodos().stream().filter(b -> {
+                return b.getId_incidente() == incidenteActivo.getId();
+            }).collect(Collectors.toList());
+            BitacoraListModel lmodel = new BitacoraListModel();
+            bitacoras.forEach(bit -> {
+                lmodel.addBitacora(bit);
+            });
+            lbxBitacora.setModel(lmodel);
+            
+            txtActual.setText(avanceActual()+"%");
+        } catch (SQLException | ClassNotFoundException | DAOException ex) {
+            JOptionPane.showMessageDialog(this, "No se pudo cargar la lista de bitacoras");
+            Logger.getLogger(IfrmBitacora.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -252,14 +337,25 @@ public class IfrmBitacora extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jtblIncidentes;
     private javax.swing.JList<String> lbxBitacora;
+    private javax.swing.JTextField txtActual;
     private javax.swing.JTextField txtAvance;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextArea txtDetalle;
     // End of variables declaration//GEN-END:variables
+
+    private void limpiar() {
+        cargarTabla();
+        txtActual.setText("");
+        txtCodigo.setText("");
+        txtAvance.setText("");
+        txtDetalle.setText("");
+        lbxBitacora.setModel(new BitacoraListModel());
+    }
 }

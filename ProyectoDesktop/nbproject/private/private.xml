@@ -3,18 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
-            <file>file:/C:/Users/Toshiba/Documents/NetBeansProjects/JavaProyectoDesktop2019/ProyectoDesktop/src/sv/edu/udb/proyecto/modelo/Usuario.java</file>
-            <file>file:/C:/Users/Toshiba/Documents/NetBeansProjects/JavaProyectoDesktop2019/ProyectoDesktop/src/sv/edu/udb/proyecto/dao/mysql/MySqlDAOManager.java</file>
-            <file>file:/C:/Users/Toshiba/Documents/NetBeansProjects/JavaProyectoDesktop2019/ProyectoDesktop/src/sv/edu/udb/proyecto/view/IfrmIncidente.java</file>
-            <file>file:/C:/Users/Toshiba/Documents/NetBeansProjects/JavaProyectoDesktop2019/ProyectoDesktop/src/sv/edu/udb/proyecto/view/IfrmUsuario.java</file>
-            <file>file:/C:/Users/Toshiba/Documents/NetBeansProjects/JavaProyectoDesktop2019/ProyectoDesktop/src/sv/edu/udb/proyecto/view/IfrmProyecto.java</file>
-=======
-            <file>file:/J:/Dropbox/Dropbox/UDB/Java%20Avanzado/Laboratorio/Proyecto/JavaProyectoDesktop2019/ProyectoDesktop/src/sv/edu/udb/proyecto/view/IfrmProyecto.java</file>
             <file>file:/J:/Dropbox/Dropbox/UDB/Java%20Avanzado/Laboratorio/Proyecto/JavaProyectoDesktop2019/ProyectoDesktop/src/sv/edu/udb/proyecto/view/FrmMaster.java</file>
-            <file>file:/J:/Dropbox/Dropbox/UDB/Java%20Avanzado/Laboratorio/Proyecto/JavaProyectoDesktop2019/ProyectoDesktop/src/sv/edu/udb/proyecto/view/FrmLogin.java</file>
-            <file>file:/J:/Dropbox/Dropbox/UDB/Java%20Avanzado/Laboratorio/Proyecto/JavaProyectoDesktop2019/ProyectoDesktop/src/sv/edu/udb/proyecto/dao/mysql/MySqlProyectoDAO.java</file>
->>>>>>> c404383ce2e925e617c352eed3bc9124290870f4
         </group>
     </open-files>
 </project-private>

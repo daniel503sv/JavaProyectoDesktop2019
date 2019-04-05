@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import sv.edu.udb.proyecto.Sesion;
+import sv.edu.udb.proyecto.dao.exception.DAOException;
 
 /**
  *
@@ -47,10 +48,12 @@ public class FrmMaster extends javax.swing.JFrame {
         omiIncidentes = new javax.swing.JMenuItem();
         omiAsignar = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        omiAprobar = new javax.swing.JMenuItem();
+        omiBitacora = new javax.swing.JMenuItem();
+        omiRevisar = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         omiDatos = new javax.swing.JMenuItem();
+        omiTodos = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -120,21 +123,29 @@ public class FrmMaster extends javax.swing.JFrame {
 
         jMenu2.setText("Incidentes");
 
-        jMenuItem1.setText("Aprobar");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        omiAprobar.setText("Aprobar");
+        omiAprobar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                omiAprobarActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem1);
+        jMenu2.add(omiAprobar);
 
-        jMenuItem2.setText("Bitacora");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        omiBitacora.setText("Bitacora");
+        omiBitacora.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                omiBitacoraActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem2);
+        jMenu2.add(omiBitacora);
+
+        omiRevisar.setText("Revisar");
+        omiRevisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                omiRevisarActionPerformed(evt);
+            }
+        });
+        jMenu2.add(omiRevisar);
 
         menuBar.add(jMenu2);
 
@@ -147,6 +158,14 @@ public class FrmMaster extends javax.swing.JFrame {
             }
         });
         jMenu1.add(omiDatos);
+
+        omiTodos.setText("Incidentes");
+        omiTodos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                omiTodosActionPerformed(evt);
+            }
+        });
+        jMenu1.add(omiTodos);
 
         menuBar.add(jMenu1);
 
@@ -180,10 +199,14 @@ public class FrmMaster extends javax.swing.JFrame {
     }//GEN-LAST:event_omiDepartamentosActionPerformed
 
     private void omiUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_omiUsuariosActionPerformed
-        if (!IfrmUsuario.activo) {
-            IfrmUsuario frmUsr = new IfrmUsuario();
-            this.desktopPane.add(frmUsr);
-            frmUsr.show();
+        try {
+            if (!IfrmUsuario.activo && (Sesion.getRol().getId()==1 || Sesion.getRol().getId()==2)) {
+                IfrmUsuario frmUsr = new IfrmUsuario();
+                this.desktopPane.add(frmUsr);
+                frmUsr.show();
+            }
+        } catch (SQLException | ClassNotFoundException | DAOException ex) {
+            Logger.getLogger(FrmMaster.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_omiUsuariosActionPerformed
 
@@ -224,20 +247,35 @@ public class FrmMaster extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_omiIncidentesActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void omiAprobarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_omiAprobarActionPerformed
         if (!IfrmAprobar.activo) {
             IfrmAprobar frm = new IfrmAprobar();
             this.desktopPane.add(frm);
             frm.show();
-        }    }//GEN-LAST:event_jMenuItem1ActionPerformed
+        }    }//GEN-LAST:event_omiAprobarActionPerformed
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+    private void omiBitacoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_omiBitacoraActionPerformed
         if (!IfrmBitacora.activo) {
             IfrmBitacora frm = new IfrmBitacora();
             this.desktopPane.add(frm);
             frm.show();
         }  // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    }//GEN-LAST:event_omiBitacoraActionPerformed
+
+    private void omiRevisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_omiRevisarActionPerformed
+        if (!IfrmProbar.activo) {
+            IfrmProbar frm = new IfrmProbar();
+            this.desktopPane.add(frm);
+            frm.show();
+        }
+    }//GEN-LAST:event_omiRevisarActionPerformed
+
+    private void omiTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_omiTodosActionPerformed
+        if (!IfrmTodosIncidentes.activo) {
+            IfrmTodosIncidentes frm = new IfrmTodosIncidentes();
+            this.desktopPane.add(frm);
+            frm.show();
+        }    }//GEN-LAST:event_omiTodosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -281,14 +319,16 @@ public class FrmMaster extends javax.swing.JFrame {
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuBar menuBar;
+    private javax.swing.JMenuItem omiAprobar;
     private javax.swing.JMenuItem omiAsignar;
+    private javax.swing.JMenuItem omiBitacora;
     private javax.swing.JMenuItem omiDatos;
     private javax.swing.JMenuItem omiDepartamentos;
     private javax.swing.JMenuItem omiIncidentes;
     private javax.swing.JMenuItem omiProyectos;
+    private javax.swing.JMenuItem omiRevisar;
+    private javax.swing.JMenuItem omiTodos;
     private javax.swing.JMenuItem omiUsuarios;
     // End of variables declaration//GEN-END:variables
 

@@ -41,12 +41,12 @@ public class MySqlBitacoraDAO implements BitacoraDAO {
             st.setInt(col++, modelo.getPorcentaje());
             st.setString(col++, modelo.getDocumento());
             st.setDate(col++, new Date(modelo.getCreado_el().getTime()));
-            st.setDate(col++, new Date(modelo.getActualizado_el().getTime()));
-            st.setInt(col++, modelo.getId());
+            st.setDate(col++, (modelo.getActualizado_el()!=null)?new Date(modelo.getActualizado_el().getTime()):null);
             if(st.executeUpdate()<0){
                 throw new DAOException("Fallo al ejecutar el statement, no se pudo insertar  "+modelo.toString());
             }
         } catch (SQLException e) {
+            System.out.println(e);
             throw new DAOException("No se pudo insertar  "+modelo.toString(),e);
         } finally{
             try {

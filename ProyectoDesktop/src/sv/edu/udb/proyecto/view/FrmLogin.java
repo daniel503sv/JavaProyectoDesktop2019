@@ -64,7 +64,7 @@ public class FrmLogin extends javax.swing.JFrame {
 
         jLabel2.setText("Contraseña");
 
-        txtUsuario.setText("prog@rh.com");
+        txtUsuario.setText("emp@rh.com");
 
         txtPassword.setText("123456");
 

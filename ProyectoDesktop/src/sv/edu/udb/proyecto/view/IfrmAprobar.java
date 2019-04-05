@@ -72,6 +72,10 @@ public class IfrmAprobar extends javax.swing.JInternalFrame {
             Sesion.getDatos().getIncidenteDAO().incidentesByDepartamentoAndEstado(dep, 1).forEach(proyecto -> {
                 dtm.addRow(convertir(proyecto.getData()));
             });
+            
+            Sesion.getDatos().getIncidenteDAO().incidentesByDepartamentoAndEstado(dep, 7).forEach(proyecto -> {
+                dtm.addRow(convertir(proyecto.getData()));
+            });
         } catch (SQLException | ClassNotFoundException | DAOException ex) {
             Logger.getLogger(IfrmProyecto.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -1,6 +1,7 @@
 package sv.edu.udb.proyecto.modelo;
 
-import java.sql.Date;
+import java.util.Date;
+
 
 /**
  *
@@ -24,7 +25,7 @@ public class Bitacora implements BaseModel {
         return data;
     }
     public Bitacora(){
-    
+        this.creado_el = new Date();
     }
     
     public Bitacora(String detalle,int id_incidente,int usuario,int porcentaje,String documento,Date creado_el, Date actualizado_el){
