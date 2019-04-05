@@ -7,10 +7,6 @@ package sv.edu.udb.proyecto.dao;
 
 import java.util.List;
 import sv.edu.udb.proyecto.dao.exception.DAOException;
-/**
- *
- * @author josed
- */
 
 //T objeto modelo
 //K id del modelo
